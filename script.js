@@ -4,6 +4,9 @@ const app = (() => {
     const _dateInput = document.querySelector('#end');
     const _timeInput = document.querySelector('#time');
     const _eventsDOM = document.querySelector('.container__events');
+
+    const _titleInputError = document.querySelector('.container__form-outer__form__title-error');
+    const _dateInputError = document.querySelector('.container__form-outer__form__date-error');
     
 
     _form.addEventListener('submit', (event) => {
@@ -12,9 +15,19 @@ const app = (() => {
         let _endDate = _dateInput.value;
         let _time = _timeInput.value;
         let _title = _titleInput.value;
-        if (checkValidDateTime(_endDate, _time)) {
-            renderEvent(_title, _endDate, _time);
+
+        if (!checkValidTitle(_title)) {
+            renderTitleInputError();
+            return;
         }
+
+        if (!checkValidDateTime(_endDate, _time)) {
+            renderDateInputError();
+            return;
+        }
+
+        clearInputsError();
+        renderEvent(_title, _endDate, _time);
     })
 
     function checkValidDateTime(date, time) {
@@ -22,6 +35,25 @@ const app = (() => {
         let currentTime = new Date().getTime();
 
         return currentTime < endTime;
+    }
+
+    function checkValidTitle(title) {
+        return title.length > 0;
+    }
+
+    function renderTitleInputError() {
+        _titleInputError.textContent = 'Event title can not be blank.';
+        _titleInputError.classList.remove('hidden');
+    }
+
+    function renderDateInputError() {
+        _dateInputError.textContent = 'Event end date can not be blank.';
+        _dateInputError.classList.remove('hidden');
+    }
+
+    function clearInputsError() {
+        _titleInputError.classList.add('hidden');
+        _dateInputError.classList.add('hidden');
     }
 
     function renderEvent(title, date, time) {

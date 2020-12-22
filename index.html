@@ -17,12 +17,18 @@
                 <input 
                     class="container__form-outer__form__input"
                     id="name"
-                    type="text" placeholder="Event name" >
+                    type="text" placeholder="Event name"
+                    required
+                    >
+                <small class="container__form-outer__form__error container__form-outer__form__title-error hidden"></small>
                 <label for="end" class="container__form-outer__form__label">End Date:</label>
                 <input 
                     class="container__form-outer__form__input"
                     id="end"
-                    type="date" placeholder="End date">
+                    type="date" placeholder="End date"
+                    required
+                    >
+                <small class="container__form-outer__form__error container__form-outer__form__date-error hidden"></small>
                 <label for="time" class="container__form-outer__form__label">Time:</label>
                 <input 
                     class="container__form-outer__form__input"
