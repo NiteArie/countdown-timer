@@ -47,7 +47,7 @@ const app = (() => {
     }
 
     function renderDateInputError() {
-        _dateInputError.textContent = 'Event end date can not be blank.';
+        _dateInputError.textContent = 'Event end time can not be smaller than current time';
         _dateInputError.classList.remove('hidden');
     }
 
