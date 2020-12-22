@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="reset.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <section class="container">
+        <section class="container__form-outer">
+            <form class="container__form-outer__form">
+                <label for="name" class="container__form-outer__form__label">Name:</label>
+                <input 
+                    class="container__form-outer__form__input"
+                    id="name"
+                    type="text" placeholder="Event name" >
+                <label for="end" class="container__form-outer__form__label">End Date:</label>
+                <input 
+                    class="container__form-outer__form__input"
+                    id="end"
+                    type="date" placeholder="End date">
+                <label for="time" class="container__form-outer__form__label">Time:</label>
+                <input 
+                    class="container__form-outer__form__input"
+                    id="time"
+                    type="time" placeholder="Time">
+                <button 
+                    class="container__form-outer__form__submit"
+                    type="submit">Create</button>
+            </form>
+        </section>
+    </section>
+    <script src="script.js"></script>
+</body>
+</html>
