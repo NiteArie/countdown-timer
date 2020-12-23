@@ -22,7 +22,7 @@ The objective of Countdown Timer is to provide a continuously decrementing displ
 
 ## Bonus Features
 
-* [ ] User can save the event so that it persists across sessions
+* [X] User can save the event so that it persists across sessions
 * [ ] User can see an alert when the event is reached
 * [X] User can specify more than one event.
 * [X] User can see a countdown timers for each event that has been defined.
