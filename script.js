@@ -7,8 +7,11 @@ const app = (() => {
 
     const _titleInputError = document.querySelector('.container__form-outer__form__title-error');
     const _dateInputError = document.querySelector('.container__form-outer__form__date-error');
-    
 
+    let events = [];
+
+    renderEventsLocalStorage();
+    
     _form.addEventListener('submit', (event) => {
         event.preventDefault();
         
@@ -27,6 +30,8 @@ const app = (() => {
         }
 
         clearInputsError();
+        saveEvent(_title, _endDate, _time);
+        saveEventsLocalStorage();
         renderEvent(_title, _endDate, _time);
     })
 
@@ -52,15 +57,37 @@ const app = (() => {
     }
 
     function clearInputsError() {
-        console.log('123');
         _titleInputError.classList.add('hidden');
         _dateInputError.classList.add('hidden');
+    }
+
+    function saveEvent(title, date, time) {
+        events.push({
+            title,
+            date,
+            time,
+        });
+    }
+
+    function saveEventsLocalStorage() {
+        localStorage.setItem("events", JSON.stringify(events));
     }
 
     function renderEvent(title, date, time) {
         _eventsDOM.appendChild(
             createEventDOM(title, date, time)
         );
+    }
+
+    function renderEventsLocalStorage() {
+        let localStorageEvents = localStorage.getItem('events');
+
+        if ( localStorageEvents ) {
+            events = [...JSON.parse(localStorageEvents)];
+            events.forEach((event) => {
+                renderEvent(event.title, event.date, event.time);
+            })
+        }
     }
 
     function randomHexColor() {
