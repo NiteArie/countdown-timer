@@ -1,5 +1,6 @@
 # countdown-timer (Countdown Timer)
 
+
 ## General Info
 We all have important events we look forward to in life, birthdays, anniversaries, and holidays to name a few. Wouldn't it be nice to have an app that counts down the months, days, hours, minutes, and seconds to an event? Countdown Timer is just that app!
 
@@ -9,6 +10,10 @@ The objective of Countdown Timer is to provide a continuously decrementing displ
 
 * Use only builtin language functions for your calculations rather than relying on a library or package like MomentJS. This assumes, of course, that the language of your choice has adequate date and time manipulation functions built in.
 * You may not use any code generators such as the Counting Down To site. You should develop your own original implementation.
+
+## Current Version
+
+Live Version: [https://nitearie.github.io/countdown-timer/](https://nitearie.github.io/countdown-timer/)
 
 ## User Stories
 
