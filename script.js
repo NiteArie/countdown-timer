@@ -14,6 +14,10 @@ const app = (() => {
 
     renderEventsLocalStorage();
 
+    _overlay.addEventListener('click', (event) => {
+        _overlay.classList.add('hidden');
+    })
+
     _form.addEventListener('submit', (event) => {
         event.preventDefault();
         
@@ -138,9 +142,17 @@ const app = (() => {
         titleDOM.textContent = title;
         dateDOM.textContent = `${new Date(`${date}`).toDateString()} ${new Date(`${date} ${time}`).toLocaleTimeString()}`;
         
-        let intervalID = setInterval(() => {
-            remainTimeDOM.textContent = calculateRemainTime(title, date, time, intervalID);
-        }, 1000)
+        let currentEpoch = new Date().getTime();
+        let futureEpoch = new Date(`${date} ${time}`).getTime();
+
+        if (currentEpoch <= futureEpoch) {
+            let intervalID = setInterval(() => {
+                remainTimeDOM.textContent = calculateRemainTime(title, date, time, intervalID);
+            }, 1000)
+        } else {
+            remainTimeDOM.textContent = `0 days : 0 hours : 0 minutes : 0 seconds`;
+        }
+
 
         eventContainer.append(titleDOM, dateDOM, remainTimeDOM);
 
