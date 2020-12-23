@@ -52,6 +52,7 @@ const app = (() => {
     }
 
     function clearInputsError() {
+        console.log('123');
         _titleInputError.classList.add('hidden');
         _dateInputError.classList.add('hidden');
     }
@@ -66,21 +67,41 @@ const app = (() => {
         return Math.floor(Math.random() * parseInt("ffffff", 16));
     }
 
+    function calculateRemainTime(futureDate, futureTime) {
+        let futureEpoch = new Date(`${futureDate} ${futureTime}`).getTime();
+        let currentEpoch = new Date().getTime();
+
+        let remainEpoch = futureEpoch - currentEpoch;
+
+        let days = Math.floor(remainEpoch / (1000 * 60 * 60 * 24));
+        let hours = Math.floor((remainEpoch % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        let minutes = Math.floor((remainEpoch % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((remainEpoch % (1000 * 60)) / 1000);
+
+        return `${days} days : ${hours} hours : ${minutes} minutes : ${seconds} seconds`;
+    }
+
     function createEventDOM(title, date, time) {
         let eventContainer = document.createElement('section');
         let titleDOM = document.createElement('h2');
         let dateDOM = document.createElement('time');
+        let remainTimeDOM = document.createElement('time');
 
         eventContainer.classList.add('container__events__event');
         titleDOM.classList.add('container__events__event__title');
         dateDOM.classList.add('container__events__event__date-time');
+        remainTimeDOM.classList.add('container__events__event__remain-time');
 
         eventContainer.style.borderLeftColor = `#${randomHexColor()}`;
 
         titleDOM.textContent = title;
         dateDOM.textContent = `${new Date(`${date}`).toDateString()} ${new Date(`${date} ${time}`).toLocaleTimeString()}`;
+        
+        setInterval(() => {
+            remainTimeDOM.textContent = calculateRemainTime(date, time)
+        }, 1000)
 
-        eventContainer.append(titleDOM, dateDOM);
+        eventContainer.append(titleDOM, dateDOM, remainTimeDOM);
 
         return eventContainer;
     }

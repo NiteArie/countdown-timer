@@ -14,9 +14,7 @@ body {
 }
 
 .container__form-outer__form {
-    display: flex;
     padding: 20px;
-    flex-wrap: wrap;
 }
 
 .container__form-outer__form__label {
@@ -31,6 +29,14 @@ body {
     padding: 10px;
     border: 2px solid hsl(210, 10%, 90%);
     margin-bottom: 10px;
+}
+
+.container__form-outer__form__error {
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    color: hsl(0, 60%, 50%);
+    margin: 5px 0;
 }
 
 .container__form-outer__form__submit {
@@ -65,3 +71,15 @@ body {
     margin: 10px 0;
 }
 
+.container__events__event__remain-time {
+    display: block;
+    margin: 10px 0;
+    margin-top: 20px;
+
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.hidden {
+    display: none;
+}
