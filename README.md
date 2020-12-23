@@ -26,4 +26,4 @@ The objective of Countdown Timer is to provide a continuously decrementing displ
 * [X] User can see an alert when the event is reached
 * [X] User can specify more than one event.
 * [X] User can see a countdown timers for each event that has been defined.
-* [] User can delete past events.
+* [ ] User can delete past events.
