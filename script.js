@@ -4,6 +4,8 @@ const app = (() => {
     const _dateInput = document.querySelector('#end');
     const _timeInput = document.querySelector('#time');
     const _eventsDOM = document.querySelector('.container__events');
+    const _overlay = document.querySelector('.overlay');
+    const _overlayTitle = document.querySelector('.overlay__body__title');
 
     const _titleInputError = document.querySelector('.container__form-outer__form__title-error');
     const _dateInputError = document.querySelector('.container__form-outer__form__date-error');
@@ -11,7 +13,7 @@ const app = (() => {
     let events = [];
 
     renderEventsLocalStorage();
-    
+
     _form.addEventListener('submit', (event) => {
         event.preventDefault();
         
@@ -94,11 +96,23 @@ const app = (() => {
         return Math.floor(Math.random() * parseInt("ffffff", 16));
     }
 
-    function calculateRemainTime(futureDate, futureTime) {
+    function displayEventEnd(title, futureDate, futureTime) {
+        _overlay.classList.remove('hidden');
+        let time = `${new Date(`${futureDate}`).toDateString()} ${new Date(`${futureDate} ${futureTime}`).toLocaleTimeString()}`;
+        _overlayTitle.textContent = `${title.toUpperCase()} is happening at ${time}`;
+    }
+
+    function calculateRemainTime(title, futureDate, futureTime, intervalID) {
         let futureEpoch = new Date(`${futureDate} ${futureTime}`).getTime();
         let currentEpoch = new Date().getTime();
 
         let remainEpoch = futureEpoch - currentEpoch;
+
+        if ( remainEpoch <= 0 ) {
+            displayEventEnd(title, futureDate, futureTime);
+            clearInterval(intervalID);
+            return `0 days : 0 hours : 0 minutes : 0 seconds`;
+        }
 
         let days = Math.floor(remainEpoch / (1000 * 60 * 60 * 24));
         let hours = Math.floor((remainEpoch % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -124,8 +138,8 @@ const app = (() => {
         titleDOM.textContent = title;
         dateDOM.textContent = `${new Date(`${date}`).toDateString()} ${new Date(`${date} ${time}`).toLocaleTimeString()}`;
         
-        setInterval(() => {
-            remainTimeDOM.textContent = calculateRemainTime(date, time)
+        let intervalID = setInterval(() => {
+            remainTimeDOM.textContent = calculateRemainTime(title, date, time, intervalID);
         }, 1000)
 
         eventContainer.append(titleDOM, dateDOM, remainTimeDOM);
