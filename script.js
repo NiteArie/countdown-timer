@@ -11,6 +11,7 @@ const app = (() => {
     const _dateInputError = document.querySelector('.container__form-outer__form__date-error');
 
     let events = [];
+    let _counter = 0;
 
     renderEventsLocalStorage();
 
@@ -36,9 +37,9 @@ const app = (() => {
         }
 
         clearInputsError();
+        renderEvent(_title, _endDate, _time);
         saveEvent(_title, _endDate, _time);
         saveEventsLocalStorage();
-        renderEvent(_title, _endDate, _time);
     })
 
     function checkValidDateTime(date, time) {
@@ -69,10 +70,12 @@ const app = (() => {
 
     function saveEvent(title, date, time) {
         events.push({
+            id: _counter,
             title,
             date,
             time,
         });
+        _counter++;
     }
 
     function saveEventsLocalStorage() {
@@ -81,7 +84,7 @@ const app = (() => {
 
     function renderEvent(title, date, time) {
         _eventsDOM.appendChild(
-            createEventDOM(title, date, time)
+            createEventDOM(_counter, title, date, time)
         );
     }
 
@@ -91,8 +94,12 @@ const app = (() => {
         if ( localStorageEvents ) {
             events = [...JSON.parse(localStorageEvents)];
             events.forEach((event) => {
-                renderEvent(event.title, event.date, event.time);
+                _eventsDOM.appendChild(
+                    createEventDOM(event.id, event.title, event.date, event.time)
+                );
+                _counter = event.id;
             })
+            _counter++;
         }
     }
 
@@ -126,22 +133,27 @@ const app = (() => {
         return `${days} days : ${hours} hours : ${minutes} minutes : ${seconds} seconds`;
     }
 
-    function createEventDOM(title, date, time) {
+    function createEventDOM(id, title, date, time) {
         let eventContainer = document.createElement('section');
         let titleDOM = document.createElement('h2');
         let dateDOM = document.createElement('time');
         let remainTimeDOM = document.createElement('time');
+        let deleteEventButtonDOM = document.createElement('span');
 
         eventContainer.classList.add('container__events__event');
         titleDOM.classList.add('container__events__event__title');
         dateDOM.classList.add('container__events__event__date-time');
         remainTimeDOM.classList.add('container__events__event__remain-time');
+        deleteEventButtonDOM.classList.add('container__events__event__delete');
+
+        deleteEventButtonDOM.setAttribute('id', id);
 
         eventContainer.style.borderLeftColor = `#${randomHexColor()}`;
 
         titleDOM.textContent = title;
         dateDOM.textContent = `${new Date(`${date}`).toDateString()} ${new Date(`${date} ${time}`).toLocaleTimeString()}`;
-        
+        deleteEventButtonDOM.textContent = 'X';
+
         let currentEpoch = new Date().getTime();
         let futureEpoch = new Date(`${date} ${time}`).getTime();
 
@@ -153,9 +165,18 @@ const app = (() => {
             remainTimeDOM.textContent = `0 days : 0 hours : 0 minutes : 0 seconds`;
         }
 
+        deleteEventButtonDOM.addEventListener('click', () => {
+            deleteEventById(Number.parseInt(deleteEventButtonDOM.getAttribute('id'), 10));
+            saveEventsLocalStorage();
+            eventContainer.remove();
+        })
 
-        eventContainer.append(titleDOM, dateDOM, remainTimeDOM);
+        eventContainer.append(titleDOM, dateDOM, remainTimeDOM, deleteEventButtonDOM);
 
         return eventContainer;
+    }
+
+    function deleteEventById(id) {
+        events = events.filter((event) => event.id != id);
     }
 })();

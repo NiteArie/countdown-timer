@@ -59,10 +59,20 @@ body {
 }
 
 .container__events__event {
-    box-shadow: 0 0 10px 5px hsl(210, 10%, 95%);
+    position: relative;
     padding: 10px;
     margin-bottom: 20px;
+    box-shadow: 0 0 10px 5px hsl(210, 10%, 95%);
     border-left: 7px solid hsl(220, 50%, 50%);
+}
+
+.container__events__event__delete {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-weight: bold;
+    color: hsl(0, 50%, 50%);
+    cursor: pointer;
 }
 
 .container__events__event__title {
